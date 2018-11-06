@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <form>
+        <fieldset>
+            <legend>Sign up</legend>
+            <div class="alert alert-dismissible alert-info"> Oh, sorry, this email already exists</div>
+            <div class="form-group">
+                <label for="inputEmail">Email address</label>
+                <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
+                       maxlength="50" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="inputLogin">Login</label>
+                <input name="login" type="text" class="form-control" id="inputLogin"
+                       maxlength="30" placeholder="Login">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input name="password" type="password" class="form-control" id="inputPassword"
+                       maxlength="30" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="inputPasswordRepeat">Repeat Password</label>
+                <input name="passwordRepeat" type="password" class="form-control" id="inputPasswordRepeat"
+                       maxlength="30" placeholder="Repeat password">
+            </div>
+            <div class="form-group">
+                <label for="uploadAvatar">Upload avatar</label><br>
+                <img class="question-avatar" height="120" width="120" src="{%  static "img/default.png" %}">
+                <button name="uploadAvatar" class="btn btn-secondary" id="uploadAvatar">Choose</button>
+            </div>
+            <button type="submit" class="btn btn-lg btn-info">Sign up</button>
+        </fieldset>
+    </form>
+{% endblock %}

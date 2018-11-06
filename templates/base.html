@@ -1,0 +1,83 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'fontawesome/web-fonts-with-css/css/fontawesome-all.css' %}">
+    </head>
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'js/remodal.min.js' %}"></script>
+    <body>
+        <header id="header" class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+            <div class="container">
+                <div class="col-2 navbar-brand"><a href="/">Ask Pupchen</a></div>
+                <div id="nav-search" class="col-md-3 col-lg-5">
+                    <form action="#" method="get" class="form-inline form-search pull-right">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button type="submit" class="d-none btn btn-primary"></button>
+                    </form>
+                </div>
+                <div id ="nav-ask" class="col-2">
+                    {% if not authorized %}
+                        <form action="/ask" method="get" class="form-inline form-search pull-right">
+                            <button type="submit" class="btn btn-primary">ASK QUESTION!</button>
+                        </form>
+                    {%  endif %}
+                </div>
+                <div class="col-3">
+                    {% if authorized %}
+                        <img id="nav-avatar" height="40" width="40" class="float-left" src="{%  static "img/default.png" %}">
+                        <div class="user_name">Ivan Ivanovich</div>
+                        <div class="user_menu">
+                            <a href="{% url 'login_url' %}" class="settings">Settings</a>&nbsp;&nbsp;&nbsp;
+                            <a href="{% url 'signup_url' %}" class="logout">Log out</a>
+                        </div>
+                    {% else %}
+                        <div class="user_block">
+                            <div class="user_name">You watch this page as a guest</div>
+                            <div class="user_menu">
+                                <a href="{% url 'login_url' %}" class="login">Log in</a>/
+                                <a href="{% url 'signup_url' %}" class="register">Sign up</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="row">
+                <section class="col-md-9">
+                    {% block content %}
+                    {% endblock %}
+                </section>
+                <aside class="col-md-3">
+                    <div id="popular">
+                        <h2 id="popular_label">
+                            Popular Tags:
+                        </h2>
+                        <div id="popular_tags">
+                            <a href="{% url 'tag_questions' tag='PHP' %}">PHP</a>
+                            <a href="{% url 'tag_questions' tag='Python' %}">Python</a>
+                            <a href="{% url 'tag_questions' tag='JavaScript' %}">JavaScript</a>
+                            <a href="{% url 'tag_questions' tag='.net' %}">.net</a>
+                            <a href="{% url 'tag_questions' tag='C++' %}">C++</a>
+                        </div>
+                    </div>
+                    <div id="best_users">
+                        <h2 id="best_users_label">
+                            Best Members:
+                        </h2>
+                        <div id="best_users_names">
+                            <a href="#">Smetankin Kirill</a>
+                            <a href="#">Lelya</a>
+                            <a href="#">Yurec</a>
+                            <a href="#">Pupchen</a>
+                            <a href="#">Smth up</a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    <footer></footer>
+    </body>
+</html>

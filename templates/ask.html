@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <form>
+        <fieldset>
+            <legend>New Question</legend>
+            <div class="alert alert-dismissible alert-primary"> Title can't be empty</div>
+            <div class="form-group">
+                <label for="inputTitle">Title</label>
+                <input name="title" type="text" class="form-control" id="inputTitle"
+                       maxlength="30" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <label for="inputText">Text</label>
+                <textarea name="tags"  type="text" class="form-control" id="inputText"
+                          maxlength="1000" placeholder="Text"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="inputTags">Tags</label>
+                <input name="tags" type="text" class="form-control" id="inputTags"
+                       maxlength="30" placeholder="Tags">
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-lg btn-primary">Ask!</button>
+    </form>
+{% endblock %}

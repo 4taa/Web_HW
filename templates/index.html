@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h2>
+        {{ title }}
+        {% if current == 'new' %}<a href="{% url 'hot_questions' %}" class="small">Hot questions</a>{% endif %}
+        {% if current == 'hot' %}<a href="{% url 'new_questions' %}" class="small">New questions</a>{% endif %}
+    </h2>
+    <div class="question_list">
+        {% for question in questions %}
+            <div class="question_list_item card border-dark">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2 question_list_item_left">
+                            <img class="question-avatar" height="70" width="70"
+                                 src="{%  static "img/default.png" %}">
+                            <span class="raiting">
+                                <b>{{ question.likes }}</b>
+                                <i class="fas fa-thumbs-up"></i>
+                                <i class="fas fa-thumbs-down"></i>
+                            </span>
+                        </div>
+                        <div class="col-10">
+                            <a href="{% url 'question' question_id=question.id %}" class="question_list_item_head">
+                                {{ question.title }}
+                            </a>
+                            <div class="question_list_item_text">
+                                {{ question.text }}
+                            </div>
+                            <div class="question_list_item_bottom row">
+                                <div class="col-5">
+                                    <a href="{% url 'question' question_id=question.id %}#answer_list">Answers: {{ question.answers }}</a>
+                                </div>
+                                <div class="question_list_item_bottom_tags col-7">
+                                    {% for tag in question.tags.all %}
+                                        {% if not forloop.first %}, {% endif %}
+                                        <a href="{% url 'tag_questions' tag=tag.title %}">{{ tag.title }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'paginator.html' with objects=questions %}
+{% endblock %}
+
+

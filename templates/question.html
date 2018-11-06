@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card border-primary mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3 col-lg-2 question_left">
+                    <img class="question-avatar" height="120" width="120"
+                         src="{% static "img/default.png" %}">
+                    <span class="raiting">
+                    <b>{{ question.likes }}</b>
+                    <i class="fas fa-thumbs-up"></i>
+                    <i class="fas fa-thumbs-down"></i>
+                </span>
+                </div>
+                <div class="col-md-9 col-lg-10 question_right">
+                    <div>
+                        <h4 class="card-title">{{ question.title }}</h4>
+                        <p class="card-text">{{ question.text }}</p>
+                    </div>
+                    <div>
+                        {% for tag in question.tags.all %}
+                            {% if not forloop.first %}, {% endif %}
+                            <a href="{% url 'tag_questions' tag=tag.title %}">{{ tag.title }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="anchor" id="answer_list"></a>
+    <div class="answer_list">
+        {% for answer in answers %}
+            <div class="answer_list_item card border-dark">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2 answer_list_item_left">
+                            <img class="question-avatar" height="70" width="70"
+                                 src="{%  static "img/default.png" %}">
+                            <span class="raiting">
+                            <b>{{ answer.likes }}</b>
+                            <i class="fas fa-thumbs-up"></i>
+                            <i class="fas fa-thumbs-down"></i>
+                        </span>
+                        </div>
+                        <div class="answer_list_item_right col-10">
+                            <div>
+                                {{ answer.text }}
+                            </div>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" {% if answer.correct %}checked{% endif %}
+                                           type="checkbox" id="inlineCheckbox1" value="correct_answer">
+                                    <label class="form-check-label" for="inlineCheckbox1">Correct</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <hr/>
+    <form>
+        <div class="form-group">
+            <textarea class="form-control" id="new-question" rows="3" placeholder="Enter your answer..."></textarea>
+        </div>
+        <button type="submit" class="float-right btn btn-info">Submit</button>
+
+    </form>
+    {% include 'paginator.html' with objects=answers %}
+{% endblock %}
