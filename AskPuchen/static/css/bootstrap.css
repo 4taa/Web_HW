@@ -9063,12 +9063,12 @@ a.text-dark:hover, a.text-dark:focus {
 
 .btn-primary,
 .btn-primary:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#e72510), color-stop(6%, #D9230F), to(#cb210e));
-  background-image: linear-gradient(#e72510, #D9230F 6%, #cb210e);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#000099), color-stop(6%, #000099), to(#000099));
+  background-image: linear-gradient(#000099, #000099 6%, #000099);
   background-repeat: no-repeat;
   -webkit-filter: none;
           filter: none;
-  border: 1px solid #ba1e0d;
+  border: 1px solid #000099;
 }
 
 .btn-secondary,

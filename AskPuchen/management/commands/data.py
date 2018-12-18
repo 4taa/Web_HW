@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from faker import Factory
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
@@ -18,10 +17,8 @@ class Command(BaseCommand):
             u = User()
             u.username = self.faker.name()
             u.save()
-
             up = Profile()
             up.user = u
-
             up.save()
 
     def create_questions(self):
@@ -29,10 +26,8 @@ class Command(BaseCommand):
 
         for user in users:
             q = Question()
-
             q.title = self.faker.sentence()
             q.text = self.faker.paragraph(),
-
             q.author = user
             q.save()
 
@@ -63,7 +58,6 @@ class Command(BaseCommand):
         for question in questions:
             for tag in tags:
                 t = tag
-
                 if t not in question.tags.all():
                     question.tags.add(t)
 

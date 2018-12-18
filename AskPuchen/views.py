@@ -1,14 +1,7 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from AskPuchen.models import Question, Tag, Answer
-from AskPuchen.functions import paginate
-import logging
-
-logger = logging.getLogger(__name__)
-
-
-# Create your views here.
-
 
 class BaseView(View):
     def render(self, request, template, context):
@@ -16,14 +9,15 @@ class BaseView(View):
             'authorized': request.user.is_authenticated,
             'user': {'name': request.user.username},
         })
-
         return render(request, template, context)
 
 
 class NewQuestions(BaseView):
     def get(self, request):
-        questions = Question.object.list_new()
-        questions = paginate(request, questions)
+        questions_lists = Question.object.list_new()
+        paginator = Paginator(questions_lists, 5)
+        page = request.GET.get('page')
+        questions = paginator.get_page(page)
         return super().render(request, 'index.html', {'questions': questions,
                                                       'title': 'New Questions',
                                                       'current': 'new'})
@@ -31,8 +25,10 @@ class NewQuestions(BaseView):
 
 class HotQuestions(BaseView):
     def get(self, request):
-        questions = Question.object.list_hot()
-        questions = paginate(request, questions)
+        questions_lists = Question.object.list_hot()
+        paginator = Paginator(questions_lists, 5)
+        page = request.GET.get('page')
+        questions = paginator.get_page(page)
         return super().render(request, 'index.html', {'questions': questions,
                                                       'title': 'Hot Questions',
                                                       'current': 'hot'})
@@ -41,8 +37,10 @@ class HotQuestions(BaseView):
 class TagQuestions(BaseView):
     def get(self, request, tag):
         tag = get_object_or_404(Tag, title=tag)
-        questions = Question.object.list_tag(tag)
-        questions = paginate(request, questions)
+        questions_lists = Question.object.list_tag(tag)
+        paginator = Paginator(questions_lists, 5)
+        page = request.GET.get('page')
+        questions = paginator.get_page(page)
         return super().render(request, 'index.html', {'questions': questions,
                                                       'title': "Tag: {}".format(tag.title)})
 
@@ -50,7 +48,10 @@ class TagQuestions(BaseView):
 class QuestionView(BaseView):
     def get(self, request, question_id):
         question = Question.object.get_single(question_id)
-        answers = paginate(request, Answer.object.get_for_question(question), 10)
+        answers_lists = Answer.object.get_for_question(question)
+        paginator = Paginator(answers_lists, 5)
+        page = request.GET.get('page')
+        answers = paginator.get_page(page)
         return super().render(request, 'question.html', {'question': question,
                                                          'answers': answers})
 
